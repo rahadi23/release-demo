@@ -31,7 +31,8 @@ jobs:
           {
             echo 'CHANGELOG<<EOF'
             git log --pretty=format:'* %s (%h)' $(git describe --tags --abbrev=0)..HEAD
-            echo '\nEOF'
+            echo ''
+            echo 'EOF'
           } >> $GITHUB_ENV
           cat $GITHUB_ENV
 
