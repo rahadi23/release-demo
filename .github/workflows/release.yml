@@ -31,6 +31,7 @@ jobs:
             git log --pretty=format:'* %s (%h)' $(git describe --tags --abbrev=0)..HEAD
             echo 'EOF'
           } >> $GITHUB_ENV
+          cat $GITHUB_ENV
 
       - id: release
         name: Create Release
@@ -41,5 +42,5 @@ jobs:
           allowUpdates: true
           tag: ${{ steps.semver.outputs.next }}
           name: Release ${{ steps.semver.outputs.next }}
-          body: "## Changelog\n\n${{ env.CHANGELOG }}"
+          body: "## Changelog\n\n${CHANGELOG}"
           token: ${{ github.token }}
