@@ -1,0 +1,42 @@
+name: Release
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+
+    steps:
+      - id: checkout
+        name: Checkout Code
+        uses: actions/checkout@v4
+
+      - id: semver
+        name: Get Next Version
+        uses: ietf-tools/semver-action@v1.10.2
+        with:
+          token: ${{ github.token }}
+          branch: main
+
+      - id: changelog
+        name: Get Changelog
+        run: |
+          {
+            echo 'CHANGELOG<<EOF'
+            git log --pretty=format:'* %s (%h)' $(git describe --tags --abbrev=0)..HEAD
+            echo 'EOF'
+          } >> $GITHUB_ENV
+
+      - id: release
+        name: Create Release
+        uses: ncipollo/release-action@v1.16.0
+        with:
+          draft: false
+          makeLatest: true
+          allowUpdates: true
+          name: ${{ steps.semver.outputs.next }}
+          body: "##Changelog\n\n$CHANGELOG"
+          token: ${{ github.token }}
