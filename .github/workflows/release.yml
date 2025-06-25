@@ -8,7 +8,9 @@ on:
 jobs:
   release:
     runs-on: ubuntu-latest
-
+    permissions:
+      contents: write
+      packages: write
     steps:
       - id: checkout
         name: Checkout Code
