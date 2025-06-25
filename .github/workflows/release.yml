@@ -35,13 +35,11 @@ jobs:
       - id: release
         name: Create Release
         uses: ncipollo/release-action@v1.16.0
-        env:
-          CHANGELOG: ${{ env.CHANGELOG }}
         with:
           draft: false
           makeLatest: true
           allowUpdates: true
           tag: ${{ steps.semver.outputs.next }}
           name: Release ${{ steps.semver.outputs.next }}
-          body: "## Changelog\n\n ${{ env.CHANGELOG }}"
+          body: "## Changelog\n\n${{ env.CHANGELOG }}"
           token: ${{ github.token }}
