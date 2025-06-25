@@ -37,6 +37,7 @@ jobs:
           draft: false
           makeLatest: true
           allowUpdates: true
-          name: ${{ steps.semver.outputs.next }}
+          tag: ${{ steps.semver.outputs.next }}
+          name: Release ${{ steps.semver.outputs.next }}
           body: "##Changelog\n\n$CHANGELOG"
           token: ${{ github.token }}
